@@ -141,7 +141,7 @@ class Ctl_retailproduct extends CI_Controller {
 			$textmenu = "";
 			$textmenu .= "เมนูหลัก : <span class='".$colormenu."'";
 			$textmenu .= "style='font-weight: bold;'>".$row->RPM_NAME_TH."</span> <br>";
-			$textmenu .= "รหัส(SKU) : <span class='text-success'>".$row->RPL_ID."</span> | Code : <span class='text-info'>".$row->RPL_CODE."</span> ".$promotionhook."<br>";
+			$textmenu .= "รหัส(SKU) : <span class='text-success'>".$row->RPL_CM."</span> | Code : <span class='text-info'>".$row->RPL_CODE."</span> ".$promotionhook."<br>";
 			$textmenu .= "รายการเมนู : ".$row->RPL_NAME_TH.$btn_proref."<br>";
 			$textmenu .= "วันที่เพิ่ม : ".thai_date($row->RPL_DATE_STARTS).$btngroup_manage;
 

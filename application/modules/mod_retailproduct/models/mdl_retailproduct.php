@@ -10,7 +10,7 @@ class Mdl_retailproduct extends CI_Model {
         $this->db->select('retail_productmain.ID AS RPM_ID, retail_productmain.NAME_TH AS RPM_NAME_TH, retail_productmain.NAME_US AS RPM_NAME_US,
             retail_productlist.NAME_TH AS RPL_NAME_TH, retail_productlist.NAME_US AS RPL_NAME_US, retail_productlist.STATUS AS RPL_STATUS,
             retail_productlist.DATE_STARTS AS RPL_DATE_STARTS, retail_productlist.ID AS RPL_ID, retail_productlist.CODE AS RPL_CODE,
-            retail_productlist.list_id AS RPL_LISTID
+            retail_productlist.list_id AS RPL_LISTID, retail_productlist.CODEMAC AS RPL_CM
         ');  
         $this->db->from('retail_productmain'); 
         $this->db->join('retail_productlist', "retail_productmain.ID = retail_productlist.PROMAIN_ID", 'right');
