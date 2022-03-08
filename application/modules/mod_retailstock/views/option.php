@@ -50,10 +50,13 @@
     <div class="col-md-9">
         <div class="d-flex">
             <div class="">
-
+                <?php
+                    if(chkPermissPage('stock_month')){
+                ?>
                 <div class="form-group">
                     <button id="listmonth" type="button" class="btn btn-success btn-sm w-100" value="<?php echo date('Y-m'); ?>">stock เดือนนี้</button>
                 </div>
+                
                 <div class="form-group">
                     <select name="" id="select_listmonth" class="form-control form-control-sm bg-warning">
                         <option value="">เลือกเดือน</option>
@@ -92,6 +95,9 @@
                         ?>
                     </select>
                 </div>
+                <?php
+                    }
+                ?>
 
             </div>
 
