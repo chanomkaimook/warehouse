@@ -384,7 +384,6 @@ class Ctl_createorder extends CI_Controller
 								<div class="col-sm-5">
 									<div class="list-CA001">
 											<b>รหัสออเดอร์ : ' . $row->CODE . '</b> <br>
-											ชื่อ-นามสกุล : ' . $row->NAME . ' ' . $textcode . '<br> 
 											วันที่ : ' . thai_date($row->DATE_STARTS) . ' เวลา : ' . date('H:i:s', strtotime($row->DATE_STARTS)) . ' น. <br>
 											รูปแบบการส่ง : ' . $DELIVERYFORMID . ' | สาขา : ' . $METHODORDER_ID .'
 									</div>

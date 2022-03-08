@@ -35,6 +35,10 @@ class Mdl_createorder extends CI_Model {
                 $this->db->where('retail_bill.STATUS_COMPLETE in (0,1,5)');
             }
         }
+		
+		if($this->session->userdata('franshine')){
+			$this->db->where('retail_bill.METHODORDER_ID', $this->session->userdata('franshine')); 
+		}
 
         if(!empty($_POST["search"]["value"])) {  
            $this->db->like("retail_bill.CODE", $_POST["search"]["value"]);  
@@ -739,7 +743,8 @@ class Mdl_createorder extends CI_Model {
 		$this->db->from("retail_bill");
         $this->db->join('retail_billdetail','retail_bill.ID = retail_billdetail.BILL_ID ','left'); 
         $this->db->join('retail_productmain','retail_billdetail.PROMAIN_ID = retail_productmain.ID ','left'); 
-        $this->db->join('retail_productlist','if(retail_billdetail.LIST_ID is not null,retail_billdetail.LIST_ID = retail_productlist.ID, retail_billdetail.PROLIST_ID = retail_productlist.ID )','left',false);
+        // $this->db->join('retail_productlist','if(retail_billdetail.LIST_ID is not null,retail_billdetail.LIST_ID = retail_productlist.ID, retail_billdetail.PROLIST_ID = retail_productlist.ID )','left',false);
+        $this->db->join('retail_productlist','retail_billdetail.PROLIST_ID = retail_productlist.ID','left');
         $this->db->join('retail_methodorder','retail_bill.METHODORDER_ID = retail_methodorder.ID ','left');
         $this->db->join('staff','retail_bill.USER_STARTS = staff.CODE ','left');
         $this->db->join('bank','retail_bill.TRANSFERED_BANIK_ID = bank.ID ','left');
