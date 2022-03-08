@@ -210,10 +210,12 @@
                                                     <?php
 														$sql = $this->db->select('*')
 														->from('retail_methodorder')
-														->where('id',$this->session->userdata('franshine'))
-														->where('status',1)
-														->get();
-														foreach($sql->result() as $row){
+                                                        ->where('status',1);
+                                                        if($this->session->userdata('franshine')){
+                                                            $sql->where('id',$this->session->userdata('franshine'));
+                                                        }
+														$q = $sql->get();
+														foreach($q->result() as $row){
 															echo '<option value="'.$row->ID.'"> '.$row->TOPIC.' </option>';
 														}
 													?>

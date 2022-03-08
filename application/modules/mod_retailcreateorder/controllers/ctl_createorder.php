@@ -116,7 +116,11 @@ class Ctl_createorder extends CI_Controller
 			'submenu' 		=> $this->set['submenu']
 		);
 		$data['Query_bank'] = $this->mdl_sql->get_WhereParaqry('bank', 'status', 1);
-		$data['Query_methodorder'] = $this->mdl_sql->get_Where2Paraqry('retail_methodorder', 'status', 1,'id', $this->session->userdata('franshine'));
+		if($this->session->userdata('franshine')){
+			$data['Query_methodorder'] = $this->mdl_sql->get_Where2Paraqry('retail_methodorder', 'status', 1,'id', $this->session->userdata('franshine'));
+		}else{
+			$data['Query_methodorder'] = $this->mdl_sql->get_WhereParaqry('retail_methodorder', 'status', 1);
+		}
 		$data['Query_productmain'] = $this->mdl_sql->get_WhereParaqry('retail_productmain', 'status', 1);
 		$data['Query_productlist'] = $this->mdl_sql->get_WhereParaqry('retail_productlist', 'status', 1);
 		$data['base_bn'] = base_url() . BASE_BN;
@@ -134,7 +138,11 @@ class Ctl_createorder extends CI_Controller
 
 		$id = $this->input->get('id');
 		$data['Query_bank'] = $this->mdl_sql->get_WhereParaqry('bank', 'status', 1);
-		$data['Query_methodorder'] = $this->mdl_sql->get_Where2Paraqry('retail_methodorder', 'status', 1,'id', $this->session->userdata('franshine'));
+		if($this->session->userdata('franshine')){
+			$data['Query_methodorder'] = $this->mdl_sql->get_Where2Paraqry('retail_methodorder', 'status', 1,'id', $this->session->userdata('franshine'));
+		}else{
+			$data['Query_methodorder'] = $this->mdl_sql->get_WhereParaqry('retail_methodorder', 'status', 1);
+		}
 		$data['Query_billdetil'] = $this->mdl_createorder->datebilldetail($id);
 		$data['Query_productmain'] = $this->mdl_sql->get_WhereParaqry('retail_productmain', 'status', 1);
 		$data['Query_productlist'] = $this->mdl_sql->get_WhereParaqry('retail_productlist', 'status', 1);
