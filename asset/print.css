@@ -1,0 +1,24 @@
+	.row{
+		width:100%;
+	}
+	.col-md-6 {
+		width:48%;
+		display:inline-table;
+	}
+	
+	.div-ems {
+                padding: 1rem;
+                margin: 0.5rem;
+                border: 1px solid;
+                border-radius: 20px;
+                
+				font-size: 1.5rem;
+            }
+	@media print
+	{
+		.pagebreak {
+			clear: both;
+			page-break-after: always;
+		}
+
+	}

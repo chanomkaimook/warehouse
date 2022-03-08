@@ -1,0 +1,11 @@
+<palette>
+<color name=dark-wood-planks-background--1 rgb='F2F2F2' r='242' g='242' b='242' />
+<color name=dark-wood-planks-background--2 rgb='BF9B7A' r='191' g='154' b='122' />
+<color name=dark-wood-planks-background--3 rgb='8C675A' r='140' g='103' b='89' />
+<color name=dark-wood-planks-background--4 rgb='261C1A' r='38' g='27' b='25' />
+<color name=dark-wood-planks-background--5 rgb='59433E' r='89' g='66' b='61' />
+</palette>
+a:hover	gold
+#f9d59e  rgba(249,213,158,1)
+
+color dark red = rgb='#790000' r='121' g='0' b='0'

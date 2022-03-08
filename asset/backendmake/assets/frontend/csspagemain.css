@@ -1,0 +1,135 @@
+.mainbg {
+				background-color: rgba(0, 0, 0, 0.30);
+				background-image: radial-gradient(circle, rgba(0, 0, 0, 0.30) , #3d3a3a96), url(http://localhost/chokchaisteakhouse/asset/images/front/banner/wongnai_0037.jpg);
+				width: 100%;
+				float: left;
+				margin-right: -100%;
+				position: relative;
+				opacity: 1;
+				display: block;
+				z-index: 2;
+			}
+			.logoimg {	padding: 20px;
+			background-color: #000000a8;
+			border: 2px solid #ffaa61;
+		}
+		.imgfranshine {
+			margin-top: 2rem;
+			border: 1px solid #ddd;
+			border-radius: 4px;
+			background-color: #FFF;
+			padding: 5px;
+		 
+		}
+		.colorlib-menu {
+			padding: 1em 0;
+			clear: both;
+			position: relative;
+		}
+		.color {
+			background-color: rgba(255, 255, 255, 0);
+    		background-image: linear-gradient(rgba(255, 255, 255, 0), #000000);
+		}
+		 
+		.img-story {opacity: 0.3;background : url("<?php echo  base_url('asset') ?>/images/front/about/2-Background_resize.png") no-repeat fixed right;}
+		.event {text-align: center; padding: 20px;}
+		.font-size3 {font-size: 3rem}
+		@media (max-width: 991px) {
+			.font-size1 {font-size: 1rem}
+			.font-size3 {font-size: 1.5rem}
+			.section-gap{padding:140px }
+		}
+		 
+		/* --------------------------- */
+		.dish-wrap2 {
+			overflow: hidden;
+			height: 237px;
+			display: block;
+			width: 100%;
+			position: relative;
+			z-index: 0;
+			background: #f7f7f7;
+			margin-bottom: 30px; }
+			.dish-wrap2 .price {
+				position: absolute;
+				top: 5px;
+				left: 5px;
+				display: table;
+				width: 60px;
+				height: 60px;
+				text-align: center;
+				color: #fff;
+				background: #FF6107;
+				-webkit-border-radius: 50%;
+				-moz-border-radius: 50%;
+				-ms-border-radius: 50%;
+				border-radius: 50%; }
+				.dish-wrap2 .price span {
+				display: table-cell;
+				vertical-align: middle; }
+			.dish-wrap2 .addtocart {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				display: table;
+				height: 400px;
+				width: 100%;
+				text-align: center;
+				z-index: 1;
+				-webkit-transition: 0.3s;
+				-o-transition: 0.3s;
+				transition: 0.3s;
+				opacity: 0; }
+				.dish-wrap2 .addtocart .dis-tc {
+				width: 100%;
+				display: table-cell;
+				vertical-align: middle; }
+				.dish-wrap2 .addtocart .dis-tc span {
+					padding: 5px 10px;
+					background: rgba(0, 0, 0, 0.5);
+					-webkit-border-radius: 4px;
+					-moz-border-radius: 4px;
+					-ms-border-radius: 4px;
+					border-radius: 4px; }
+					.dish-wrap2 .addtocart .dis-tc span a {
+					color: #fff;
+					text-decoration: none; }
+			@media screen and (max-width: 768px) {
+				.dish-wrap2 {
+				height: auto;
+				margin-bottom: 20px; } 
+				 
+			}
+			  
+				.dish-wrap2 .dish-img2 {
+					height: 237px;
+					z-index: -1;
+				}
+			.dish-wrap2 .desc {
+				padding: 1.5em;
+				text-align: center; }
+				.dish-wrap2 .desc h2 {
+				font-size: 2rem;
+				margin-bottom: 0; }
+				.dish-wrap2 .desc h2 a {
+					color: rgba(48, 48, 48, 0.75);
+					text-decoration: none; }
+			.dish-wrap2 .wrap {
+				position: relative;
+				-webkit-transition: 0.2s;
+				-o-transition: 0.2s;
+				transition: 0.2s; }
+			.dish-wrap2:hover .addtocart {
+				opacity: 1; }
+			.dish-wrap2:hover .wrap {
+				margin-top: -70px; }
+			.datastrats {
+				font-size: 1.5rem;
+				padding: 10px;
+				color: #000;
+				background-color: #eeeeee;
+				position: relative;
+				top: -30px;
+			}
+			.flexslider { background: rgba(255, 255, 255, 0); }

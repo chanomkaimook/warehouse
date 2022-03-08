@@ -1,0 +1,87 @@
+.pd-t15{
+	padding-top:15px;
+}
+.pd-t30{
+	padding-top:30px;
+}
+.pd-t60{
+	padding-top:60px;
+}
+.pd-bt15{
+	padding-bottom:15px;
+}
+.pd-bt30{
+	padding-bottom:30px;
+}
+.pd-bt60{
+	padding-bottom:60px;
+}
+.pd-lr15{
+	padding:0px 15px 0px 15px;
+}
+.pd-lr30{
+	padding:0px 30px 0px 30px;
+}
+.pd-lr60{
+	padding:0px 60px 0px 60px;
+}
+
+.mg-t15{
+	margin-top:15px;
+}
+.mg-t30{
+	margin-top:30px;
+}
+.mg-t60{
+	margin-top:60px;
+}
+.mg-bt15{
+	margin-bottom:15px;
+}
+.mg-bt30{
+	margin-bottom:30px;
+}
+.mg-bt60{
+	margin-bottom:60px;
+}
+/*************************************/
+/*************************************/
+/**********		event		**********/
+/*************************************/
+.sidebar .logopanel img {
+  display: block;
+  height: 100%;
+}
+.sf-viewport {
+	height:auto !important;
+}
+#topic .fileinput .thumbnail > img {
+	width:25% !important;
+}
+.preview .alert {
+	  left: 50%;
+	  position: absolute;
+	  top: 40%;
+	  transform: translate(-50%, -50%);
+	  width: 100%;
+	  text-align: center;
+}
+/*************************************/
+/**********	  viewstatics	**********/
+/*************************************/
+.widget-info p.text {
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	width:15em;
+}
+.widget-info span {
+	color:#ccc;
+}
+/*************************************/
+/**********	      user		**********/
+/*************************************/
+#barpackage li #s2id_shirt, #barpackage li #s2id_hamberger{
+	display:inline-block;
+	width:100%;
+}

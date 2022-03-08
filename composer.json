@@ -1,0 +1,8 @@
+{
+    "require": {
+        "aferrandini/phpqrcode": "^1.0",
+        "intervention/image": "^2.5",
+        "phpoffice/phpspreadsheet": "^1.12",
+        "mpdf/mpdf": "^8.0"
+    }
+}
