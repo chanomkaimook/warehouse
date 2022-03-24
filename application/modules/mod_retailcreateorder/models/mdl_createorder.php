@@ -408,7 +408,9 @@ class Mdl_createorder extends CI_Model {
 								
 								'QUANTITY'      => get_valueNullToNull($row['proqty']),
                                 'TOTAL_PRICE'   => "",
-    
+                                
+                                'DATE_STARTS'   => $Result->DATE_STARTS ,
+								'USER_STARTS'   => $Result->USER_STARTS ,
                                 'DATE_UPDATE'   => get_valueNullToNull(trim($this->input->post('order_date').' '.date('H:i:s')))  ,
                                 'USER_UPDATE' 	=> $this->session->userdata('useradminid'),
                                 'STATUS' 		=> 1
@@ -425,6 +427,8 @@ class Mdl_createorder extends CI_Model {
                                 'QUANTITY'      => get_valueNullToNull($row['proqty']),
                                 'TOTAL_PRICE'   => "",
     
+                                'DATE_STARTS'   => $Result->DATE_STARTS ,
+								'USER_STARTS'   => $Result->USER_STARTS ,
                                 'DATE_UPDATE'   => get_valueNullToNull(trim($this->input->post('order_date').' '.date('H:i:s')))  ,
                                 'USER_UPDATE' 	=> $this->session->userdata('useradminid'),
                                 'STATUS' 		=> 1

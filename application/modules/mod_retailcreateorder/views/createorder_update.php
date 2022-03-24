@@ -139,7 +139,7 @@
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
                                                         </div>
-                                                        <input type="date" class="form-control " name="order_date" id="order_date" value="<?php echo date('Y-m-d',strtotime($Query_billdetil['DATE_STARTS_strtotime'])); ?>" <?php echo $disabled; ?>>
+                                                        <input type="date" class="form-control " name="order_date" id="order_date" value="<?php echo date('Y-m-d',strtotime($Query_billdetil['DATE_STARTS_strtotime'])); ?>" <?php echo ($disabled ? "readonly=readonly" : ""); ?>>
                                                 
                                                     </div>
                                                 </div>

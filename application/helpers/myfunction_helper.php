@@ -581,6 +581,11 @@ function countorder(){
  $ci->db->select('*');
  $ci->db->from('retail_bill');
  $ci->db->where('retail_bill.STATUS_COMPLETE in (0,1,5)');
+
+ if($ci->session->userdata('franshine')){
+	$ci->db->where('retail_bill.methodorder_id',$ci->session->userdata('franshine'));
+ }
+
  $ci->db->where('retail_bill.STATUS',1);
  $Query  = $ci->db->get();
   $num = $Query->num_rows($Query);

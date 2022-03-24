@@ -53,3 +53,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'mod_retaildashboard/ctl_dashboard/dashboard';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+// $route['api/staff'] = 'mod_staff/authdatastaff/index';
+$route['api/staff'] = 'mod_staff/authdatastaff/user';
+$route['api/token'] = 'mod_staff/authdatastaff/token';
+$route['api/verify'] = 'mod_staff/authdatastaff/tokenverify';
