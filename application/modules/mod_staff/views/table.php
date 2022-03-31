@@ -83,7 +83,7 @@
 
                             <div class="form d-flex justify-content-between justify-content-sm-end ">
                                 <div class="form-group ml-1">
-                                    <button class="btn btn-success btn-sm" id="btn_adduser">+ เพิ่มผู้ใช้</button>
+                                    <button class="btn btn-success btn-sm" id="btn_adduser" data-toggle="modal" data-target=".md_userAdd">+ เพิ่มผู้ใช้</button>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -113,9 +113,9 @@
                                         <li class="nav-item">
                                             <a class="nav-link active" data-toggle="tab" href="#datainformation">ข้อมูล</a>
                                         </li>
-                                        <li class="nav-item">
+                                        <!-- <li class="nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#permit">สิทธิ์</a>
-                                        </li>
+                                        </li> -->
                                     </ul>
                                     <!-- Tab panes -->
                                     <div class="tab-content">
@@ -138,13 +138,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="name" class="col-sm-2 col-form-label">ชื่อ(TH)</label>
+                                                    <label for="name_th" class="col-sm-2 col-form-label">ชื่อ(TH)</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" class="form-control" id="name_th" name="name_th" placeholder="จอห์น">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label for="lastname" class="col-sm-2 col-form-label">สกุล(TH)</label>
+                                                    <label for="lastname_th" class="col-sm-2 col-form-label">สกุล(TH)</label>
                                                     <div class="col-sm-10">
                                                         <input type="text" class="form-control" id="lastname_th" name="lastname_th" placeholder="โด">
                                                     </div>
@@ -165,7 +165,7 @@
                                                 <div class="form-group row">
                                                     <label for="franshine_id" class="col-sm-2 col-form-label">สาขา</label>
                                                     <div class="col-sm-10">
-                                                        <input type="text" class="form-control" id="franshine_text" placeholder="สาขา">
+                                                        <input type="text" class="form-control" id="franshine_text" name="franshine_text" placeholder="สาขา">
 
                                                         <select name="franshine_id" id="franshine_id" class="form-control d-none">
                                                             <option value="">ไม่ระบุ</option>
@@ -188,6 +188,7 @@
                                                 <button type="button" class="btn btn-warning" id="edit">แก้ไข</button>
                                                 <button type="button" class="btn btn-info d-none" id="submit">บันทึก</button>
                                                 <button type="button" class="btn btn-default float-right" id="back">ย้อนกลับ</button>
+                                                <button type="button" class="btn btn-danger float-right mx-1" id="delete">ลบ</button>
                                             </div>
 
                                         </div>
@@ -202,6 +203,79 @@
                     </div>
                 </div>
 
+                <div class="modal fade md_userAdd bd-example-modal-lg" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="titel text-left col-md-12"> <i class="fa fa-file-text-o" aria-hidden="true"></i> เพิ่มรายชื่อผู้ใช้งาน </div>
+                            <div id="modalcontent">
+                                <form id="frmAddUser" class="form-horizontal">
+
+                                    <input type="hidden" id="userid" name="userid" value="">
+
+                                    <div class="form-group row pt-4">
+                                        <label for="add_name" class="col-sm-2 col-form-label small">ชื่อ(US)</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="add_name" name="add_name" placeholder="John">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="add_lastname" class="col-sm-2 col-form-label">สกุล(US)</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="add_lastname" name="add_lastname" placeholder="Doh">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="add_name_th" class="col-sm-2 col-form-label">ชื่อ(TH)</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="add_name_th" name="add_name_th" placeholder="จอห์น">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="add_lastname_th" class="col-sm-2 col-form-label">สกุล(TH)</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="add_lastname_th" name="add_lastname_th" placeholder="โด">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="add_username" class="col-sm-2 col-form-label">Username</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="add_username" name="add_username" placeholder="Doh">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="add_password" class="col-sm-2 col-form-label">Password</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="add_password" name="add_password" placeholder="password">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="add_franshine_id" class="col-sm-2 col-form-label">สาขา</label>
+                                        <div class="col-sm-10">
+                                            <select name="add_franshine_id" id="add_franshine_id" class="form-control">
+                                                <option value="">ไม่ระบุ</option>
+                                                <?php
+                                                if ($num) {
+                                                    foreach ($q->result() as $row) {
+                                                        echo "<option value='" . $row->ID . "'>" . $row->TOPIC . "</option>";
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <div id="modal_useradd_footer" class="d-flex justify-content-between mt-2">
+                                    <button class="btn btn-md btn-success mx-1" id="submitadd" name="submitadd" type="button">เพิ่มผู้ใช้งาน</button>
+                                    <button class="btn btn-md btn-secondary mx-1" id="canceladd" name="canceladd" type="button" data-dismiss="modal">ปิดหน้าต่าง</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
 
             </section>
 
@@ -219,7 +293,7 @@
         var pathname_new;
 
         //  set time loader
-        let timeLoad = 400;
+        let timeLoad = 200;
 
         //  set paramiter form
         let arrayInput = [{
@@ -272,9 +346,7 @@
             function tableList() {
 
                 var dataTable = $('#dataTableUser').DataTable({
-                    "processing": true,
-                    "serverSide": true,
-                    "order": [],
+
                     "scrollY": $('.flex-content-left').height() - 200 + 'px',
                     "scrollCollapse": false,
 
@@ -327,7 +399,64 @@
             }
 
             $(document).on('click', '#btn_adduser', function() {
-                console.log($(this));
+                document.getElementById('frmAddUser').reset();
+            })
+
+            $(document).on('click', '#submitadd', function() {
+                event.stopImmediatePropagation();
+
+                let form = $('form#frmAddUser').serializeArray();
+                let nameuseradd = '#modal_useradd_footer';
+                loadDataBlock(nameuseradd);
+
+                fetch(
+                        '../../api/staff/add', {
+
+                            headers: {
+                                'API-KEY': 'XOGgx6vzY2yIj7li4tS1PMrqckh8dmE5FVQRZGeL',
+                            },
+                            method: 'POST',
+                            body: JSON.stringify(form)
+                        })
+                    .then(async (response) => {
+                        // console.log(response); // Will show you the status
+                        // get json response here
+                        let result = await response.json();
+
+                        loadHide(nameuseradd);
+
+                        if (!response.ok) {
+                            throw new Error("HTTP status " + response.status);
+                        } else {
+
+                            if (result.error_code) {
+                                Swal.fire({
+                                    type: 'warning',
+                                    title: 'ข้อมูลไม่ถูกต้อง',
+                                    text: result.data,
+                                })
+
+                                return false;
+                            }
+
+                            //
+                            //  success
+                            Swal.fire({
+                                type: 'success',
+                                title: 'รายการสำเร็จ',
+                                text: 'เพิ่มผู้ใช้งานสำเร็จ',
+                                timer: 2000,
+                            }).then(
+                                $(".md_userAdd").modal('hide')
+                            )
+
+                            reloadDataTable();
+                        }
+                    })
+                    .catch(function(error) {
+                        alert(`${error}`);
+                    })
+
             })
 
             //  view information user
@@ -350,29 +479,140 @@
                 formEdit();
             })
 
+            //  delete staff
+            $(document).on('click', '#delete', function() {
+                let userid = $('input#userid[type=hidden]').val();
+
+                Swal.fire({
+                    type: 'warning',
+                    title: 'ลบข้อมูล',
+                    // timer: 2000,
+                    showConfirmButton: true,
+                    confirmButtonText: "ยืนยัน",
+                    showCancelButton: true,
+                    cancelButtonText: "ยกเลิก",
+                    text: 'ต้องการลบข้อมูลนี้',
+                }).then((swalresult) => {
+                    //
+                    //  confirm
+                    if (swalresult.value) {
+                        Swal.fire({
+                            title: 'Wait ...',
+                            allowOutsideClick: false,
+                            async onOpen(result) {
+                                fetch(
+                                        '../../api/staff/delete/' + userid, {
+
+                                            headers: {
+                                                'API-KEY': 'XOGgx6vzY2yIj7li4tS1PMrqckh8dmE5FVQRZGeL',
+                                            },
+                                            method: 'POST'
+                                        })
+                                    .then(async (response) => {
+                                        // console.log(response); // Will show you the status
+                                        // get json response here
+                                        let result = await response.json();
+
+                                        swal.close();
+
+                                        if (!response.ok) {
+                                            throw new Error("HTTP status " + response.status);
+                                        } else {
+
+                                            if (result.error_code) {
+                                                Swal.fire({
+                                                    type: 'warning',
+                                                    title: 'ข้อมูลไม่ถูกต้อง',
+                                                    text: result.data,
+                                                })
+
+                                                return false;
+                                            }
+
+                                            //
+                                            //  success
+                                            Swal.fire({
+                                                type: 'success',
+                                                title: 'รายการสำเร็จ',
+                                                text: 'ลบผู้ใช้งานสำเร็จ',
+                                                timer: 2000,
+                                            }).then(
+                                                $(".md_userAdd").modal('hide')
+                                            )
+
+                                            $('tr[data-id=' + userid + ']').attr('data-info', result.data.token)
+
+                                            $('#sec_manage').addClass('d-none');
+                                            async_reloadAfterSubmit(result.id);
+                                        }
+                                    })
+                                    .catch(function(error) {
+                                        alert(`${error}`);
+                                    })
+                            },
+                            onBeforeOpen() {
+                                Swal.showLoading()
+                            }
+                        })
+                    }
+
+                })
+            })
+
             //  submit form information
             $(document).on('click', '#submit', function() {
-                let form = $('form').serializeArray();
-                console.log(form);
+                let form = $('form#frmInfo').serializeArray();
+                let userid = $('input#userid[type=hidden]').val();
+                // console.log(JSON.stringify(form));
 
-                fetch(
-                        '../../api/staff', {
-                            headers: {
-                                'API-KEY': 'XOGgx6vzY2yIj7li4tS1PMrqckh8dmE5FVQRZGeL',
-                            },
-                            method: 'POST',
-                            body: form
-                        })
-                    .then(res => res.json())
-                    .then(resp => {
-                        console.log('res :' + resp.data);
-                    })
-                    .catch(function(error) {
-                        console.log(`Error : $(error)`);
-                    })
+                Swal.fire({
+                    title: 'Wait ...',
+                    allowOutsideClick: false,
+                    async onOpen(result) {
+                        fetch(
+                                '../../api/staff/edit/' + userid, {
 
-                //  open button submit
-                toolActionView();
+                                    headers: {
+                                        'API-KEY': 'XOGgx6vzY2yIj7li4tS1PMrqckh8dmE5FVQRZGeL',
+                                    },
+                                    method: 'POST',
+                                    body: JSON.stringify(form)
+                                })
+                            .then(async (response) => {
+                                // console.log(response); // Will show you the status
+                                // get json response here
+                                let result = await response.json();
+
+                                swal.close();
+
+                                if (!response.ok) {
+                                    throw new Error("HTTP status " + response.status);
+                                } else {
+
+                                    if (result.error_code) {
+                                        Swal.fire({
+                                            type: 'warning',
+                                            title: 'ข้อมูลไม่ถูกต้อง',
+                                            text: result.data,
+                                        })
+
+                                        return false;
+                                    }
+
+                                    $('tr[data-id=' + userid + ']').attr('data-info', result.data.token)
+
+                                    async_reloadAfterSubmit(result.id);
+                                }
+                            })
+                            .catch(function(error) {
+                                alert(`${error}`);
+                            })
+                    },
+                    onBeforeOpen() {
+                        Swal.showLoading()
+                    }
+                })
+
             })
 
             //  back to view information user
@@ -383,12 +623,35 @@
                 async_formViews(userid);
             })
 
+            //  reload data table
+            async function async_reloadAfterSubmit(userid) {
+                let doing1 = await new Promise((resolve, reject) => {
+                    resolve(
+                        reloadDataTable()
+                    )
+                });
+
+                let doing2 = await new Promise((resolve, reject) => {
+                    resolve(
+                        //  show user data
+                        async_formViews(userid)
+                    )
+                });
+
+                //  open button submit
+                toolActionView();
+            }
+
             /* ======================================================== */
             /*  FUNCTION 
             /* ======================================================== */
 
+            function reloadDataTable() {
+                $('#dataTableUser').DataTable().ajax.reload();
+            }
+
             function formViews(dataarray) {
-                let frm = $('form');
+                let frm = $('form#frmInfo');
 
                 let elementId = "";
                 arrayInput.forEach(function(key, index) {
@@ -398,6 +661,9 @@
                     elementId.removeClass('form-control').addClass('form-control-plaintext').attr('readonly', 'readonly');
                 })
 
+                $('form #franshine_text').removeClass('d-none');
+                $('form select#franshine_id').addClass('d-none');
+
                 //  open button submit
                 toolActionView();
 
@@ -406,7 +672,7 @@
             }
 
             function formEdit() {
-                let frm = $('form');
+                let frm = $('form#frmInfo');
 
                 let elementId = "";
                 arrayInput.forEach(function(key, index) {
@@ -415,6 +681,9 @@
                     elementId.addClass('form-control').removeClass('form-control-plaintext').removeAttr('readonly');
                 })
 
+                $('form #franshine_text').addClass('d-none');
+                $('form select#franshine_id').removeClass('d-none');
+
                 //  open button submit
                 toolActionEdit();
             }
@@ -422,7 +691,6 @@
             function dataViews(userid) {
                 let token = $('tr[data-id=' + userid + ']').attr('data-info');
                 let userdata = parseJwt(token);
-                console.log(userdata);
 
                 return userdata;
             }
@@ -439,8 +707,8 @@
 
             let secterManage = '#sec_manage';
 
-            function loadData() {
-                let elementId = secterManage;
+            function loadData(nameelement) {
+                let elementId = (nameelement ? nameelement : secterManage);
                 let loaderBlock = $('div').find('.loader');
                 if (loaderBlock.length) {
                     return false;
@@ -463,8 +731,30 @@
                 }
             }
 
-            function loadHide() {
-                let elementId = secterManage;
+            function loadDataBlock(nameelement) {
+                let elementId = (nameelement ? nameelement : secterManage);
+                let loaderBlock = $('div').find('.loader');
+                if (loaderBlock.length) {
+                    return false;
+                }
+
+                let loader = `
+                <div class="loader d-flex justify-content-center" style="" role="status">
+                    <div class="spinner-border" style="" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                `;
+
+                if (elementId) {
+
+                    $(elementId).addClass('invisible');
+                    $(elementId).parent().append(loader);
+                }
+            }
+
+            function loadHide(nameelement) {
+                let elementId = (nameelement ? nameelement : secterManage);
                 $('.loader').remove();
                 $(elementId).removeClass('invisible');
             }

@@ -55,6 +55,18 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 // $route['api/staff'] = 'mod_staff/authdatastaff/index';
+$route['dash/dashboard'] = 'mod_retaildashboard/ctl_dashboard/dashboard';
 $route['api/staff'] = 'mod_staff/authdatastaff/user';
+$route['api/staff/add'] = 'mod_staff/authdatastaff/user';
+// $route['api/staff/edit'] = 'mod_staff/authdatastaff/user';
+// $route['api/staff/delete'] = 'mod_staff/authdatastaff/user';
+$route['api/staff/edit/(:any)'] = 'mod_staff/authdatastaff/user/$1';
+$route['api/staff/delete/(:any)'] = 'mod_staff/authdatastaff/user/$1';
+
+//  เพราะไม่สามารถจัดการกับ error 405 not allow method ได้ ต้องลบ wabDAV จาก server ซึ่งเสี่ยงที่โดเมนตัวอื่นจะพังตาม
+//  Ref:
+//  https://stackoverflow.com/questions/29442947/web-api-put-returning-404
+// $route['api/staff/edit/(:any)'] = 'mod_staff/authdatastaff/user/$1';
+
 $route['api/token'] = 'mod_staff/authdatastaff/token';
 $route['api/verify'] = 'mod_staff/authdatastaff/tokenverify';

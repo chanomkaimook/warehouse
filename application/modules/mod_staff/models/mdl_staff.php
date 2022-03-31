@@ -1,11 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use \Firebase\JWT\JWT;
+
 class Mdl_staff extends CI_Model
 {
 
     //---------------------------- DATATABLE ----------------------------//
-    var $order_column = array("ID", "RPL_NAME_TH", "RPL_NAME_US", null, null);
     function make_query()
     {
 
@@ -37,7 +38,7 @@ class Mdl_staff extends CI_Model
         }
 
         if (!empty($_POST["order"])) {
-            $this->db->order_by($this->order_column[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            
         } else {
             $this->db->order_by('staff.id', 'DESC');
         }
@@ -72,12 +73,177 @@ class Mdl_staff extends CI_Model
 
     function addStaff()
     {
-        $error_code = 1;
+        $json = file_get_contents('php://input');
+        $data = json_decode($json);
 
-        $result = array(
-            'error_code'    => $error_code,
-            'data'          => $_REQUEST,
+        $arr_name = array_keys(array_column($data,'name'),'add_name');
+        $arr_lastname = array_keys(array_column($data,'name'),'add_lastname');
+        $arr_name_th = array_keys(array_column($data,'name'),'add_name_th');
+        $arr_lastname_th = array_keys(array_column($data,'name'),'add_lastname_th');
+        $arr_username = array_keys(array_column($data,'name'),'add_username');
+        $arr_password = array_keys(array_column($data,'name'),'add_password');
+        $arr_franshine_id = array_keys(array_column($data,'name'),'add_franshine_id');
+        $arr_franshine_text = array_keys(array_column($data,'name'),'add_franshine_text');
+
+        $insert = array(
+            'name'      => get_valueNullToNull($data[$arr_name[0]]->value),
+            'lastname'  => get_valueNullToNull($data[$arr_lastname[0]]->value),
+            'name_th'      => get_valueNullToNull($data[$arr_name_th[0]]->value),
+            'lastname_th'      => get_valueNullToNull($data[$arr_lastname_th[0]]->value),
+            'username'      => get_valueNullToNull($data[$arr_username[0]]->value),
+            'password'      => get_valueNullToNull(md5($data[$arr_password[0]]->value)),
+            'password_show'      => get_valueNullToNull($data[$arr_password[0]]->value),
+            'franshine_id'      => get_valueNullToNull($data[$arr_franshine_id[0]]->value),
+            'date_starts'      => date('Y-m-d H:i:s'),
+            'user_starts'      => $this->session->userdata('useradminid'),
         );
+        $this->db->insert('staff',$insert);
+        $newid = $this->db->insert_id();
+
+        // ============== Log_Detail ============== //
+        $log_query = $this->db->last_query();
+        $last_id = $this->session->userdata('log_id');
+        $detail = "Insert Staff Code : " . $this->session->userdata('useradminid') . " Name : " . $this->session->userdata('useradminname');
+        $type = "Insert";
+        $arraylog = array(
+            'log_id'            => $last_id,
+            'detail'           => $detail,
+            'logquery'       => $log_query,
+            'type'               => $type,
+            'date_starts'    => date('Y-m-d H:i:s')
+        );
+        updateLog($arraylog);
+
+        if($newid){
+            $result = array(
+                'id'          => $newid,
+                'data'        => $insert,
+            );
+        }
+        
+        return $result;
+    }
+
+    function deleteStaff($id)
+    {
+        $update = array(
+            'status'      => 0,
+        );
+        $this->db->where('id',$id);
+        $this->db->update('staff',$update);
+
+        // ============== Log_Detail ============== //
+        $log_query = $this->db->last_query();
+        $last_id = $this->session->userdata('log_id');
+        $detail = "Update Staff Code : " . $this->session->userdata('useradminid') . " Name : " . $this->session->userdata('useradminname');
+        $type = "DELETE";
+        $arraylog = array(
+            'log_id'            => $last_id,
+            'detail'           => $detail,
+            'logquery'       => $log_query,
+            'type'               => $type,
+            'date_starts'    => date('Y-m-d H:i:s')
+        );
+        updateLog($arraylog);
+
+        if($this->db->affected_rows()){
+            $result = array(
+                'id'          => $id,
+                'data'        => $update,
+            );
+        }
+        
+        return $result;
+    }
+
+    function updateStaff($id)
+    {
+        //  get data
+        $json = file_get_contents('php://input');
+        $data = json_decode($json);
+
+        $arr_name = array_keys(array_column($data,'name'),'name');
+        $arr_lastname = array_keys(array_column($data,'name'),'lastname');
+        $arr_name_th = array_keys(array_column($data,'name'),'name_th');
+        $arr_lastname_th = array_keys(array_column($data,'name'),'lastname_th');
+        $arr_username = array_keys(array_column($data,'name'),'username');
+        $arr_password = array_keys(array_column($data,'name'),'password');
+        $arr_franshine_id = array_keys(array_column($data,'name'),'franshine_id');
+        $arr_franshine_text = array_keys(array_column($data,'name'),'franshine_text');
+
+        $update = array(
+            'name'      => get_valueNullToNull($data[$arr_name[0]]->value),
+            'lastname'  => get_valueNullToNull($data[$arr_lastname[0]]->value),
+            'name_th'      => get_valueNullToNull($data[$arr_name_th[0]]->value),
+            'lastname_th'      => get_valueNullToNull($data[$arr_lastname_th[0]]->value),
+            'username'      => get_valueNullToNull($data[$arr_username[0]]->value),
+            'password'      => get_valueNullToNull(md5($data[$arr_password[0]]->value)),
+            'password_show'      => get_valueNullToNull($data[$arr_password[0]]->value),
+            'franshine_id'      => get_valueNullToNull($data[$arr_franshine_id[0]]->value),
+            'date_update'      => date('Y-m-d H:i:s'),
+            'user_update'      => $this->session->userdata('useradminid'),
+        );
+        $this->db->where('id',$id);
+        $this->db->update('staff',$update);
+
+        // set array return JWT
+        // find method order
+        $sql_meth = $this->db->select('topic')
+        ->from('retail_methodorder')
+        ->where('id',$data[$arr_franshine_id[0]]->value);
+        $q_meth = $sql_meth->get();
+        $r_meth = $q_meth->row();
+        $franshine_name = $r_meth->topic;
+
+        $datainfo = array(
+            'id'     	=> $id,
+            'name'     => $update['name'],
+            'lastname'     		=> $update['lastname'],
+            'name_th'     		=> $update['name_th'],
+            'lastname_th'     	=> $update['lastname_th'],
+            'franshine_text'     => get_valueNullToNull($franshine_name),
+            'franshine_id'     	=> $update['franshine_id'],
+            'username'     		=> $update['username'],
+            'password'     		=> $update['password_show']
+
+        );
+
+        /** 
+         * jwt config file load
+         */
+        $this->load->config('jwt');
+
+        /**
+         * Load Config Items Values 
+         */
+        $this->token_key        = $this->config->item('jwt_key');
+        $this->token_algorithm  = $this->config->item('jwt_algorithm');
+        $this->token_header  = $this->config->item('token_header');
+        
+        $tokenDataInfo = JWT::encode($datainfo, $this->token_key, $this->token_algorithm);
+        $datainfo['token'] = $tokenDataInfo;
+
+        // ============== Log_Detail ============== //
+       /*  $log_query = $this->db->last_query();
+        $last_id = $this->session->userdata('log_id');
+        $detail = "Update Staff Code : " . $this->session->userdata('useradminid') . " Name : " . $this->session->userdata('useradminname');
+        $type = "Update";
+        $arraylog = array(
+            'log_id'            => $last_id,
+            'detail'           => $detail,
+            'logquery'       => $log_query,
+            'type'               => $type,
+            'date_starts'    => date('Y-m-d H:i:s')
+        );
+        updateLog($arraylog); */
+
+        if($this->db->affected_rows()){
+            $result = array(
+                'id'          => $id,
+                'data'        => $datainfo,
+            );
+        }
+        
         return $result;
     }
     // ====================== EDIT STATUS ========================== //

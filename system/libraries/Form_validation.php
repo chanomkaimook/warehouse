@@ -168,8 +168,13 @@ class CI_Form_validation {
 	{
 		// No reason to set rules if we have no POST data
 		// or a validation array has not been specified
-		if ($this->CI->input->method() !== 'post' && empty($this->validation_data))
+		/* if ($this->CI->input->method() !== 'post' && empty($this->validation_data))
 		{
+			return $this;
+		} */
+		
+		//	new code
+		if ($this->CI->input->method() !== 'post' && $this->CI->input->method() !== 'put' && empty($this->validation_data)) {
 			return $this;
 		}
 
