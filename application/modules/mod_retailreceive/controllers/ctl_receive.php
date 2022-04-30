@@ -538,7 +538,7 @@ class Ctl_receive extends CI_Controller
 
 				if ($q->result()) {
 					foreach ($q->result() as $r) {
-
+						$total = 0;
 						//	find receive total
 						$textsql = '
 								sum(retail_receivedetail.quantity) as total,
@@ -907,6 +907,7 @@ class Ctl_receive extends CI_Controller
 					->join('retail_productlist',$table.'.prolist_id=retail_productlist.id','left')
 					->where($table . '.complete in(0,1)')
 					->where($table . '.code is not null')
+					->where($table . '.status',1)
 					->where('('.$table . '.code like "%' . $text . '%" or '.$table . '.billto like "%'.$text .'%")',null,false);
 				$number = $sql->count_all_results(null, false);
 				$q = $sql->get();
