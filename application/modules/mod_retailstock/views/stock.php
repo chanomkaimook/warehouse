@@ -52,7 +52,7 @@
 				<div class="container-fluid">
 					<div class="row mb-2">
 						<div class="col-sm-6">
-							<h1><?php echo $submenu;?></h1>
+							<h1>retail</h1>
 						</div>
 						<div class="col-sm-6">
 							<ol class="breadcrumb float-sm-right">
@@ -241,45 +241,6 @@
 					    '<"fg-toolbar ui-toolbar ui-widget-header ui-helper-clearfix ui-corner-tl ui-corner-tr"lfr>'+
 					    't'+
 					    '<"fg-toolbar ui-toolbar ui-widget-header ui-helper-clearfix ui-corner-bl ui-corner-br"ip>', */
-					buttons: [{
-							extend: 'collection',
-							text: '<i class="far fa-eye"></i>',
-							titleAttr: 'view',
-							tag: 'span',
-							buttons: ['columnsToggle', 'colvisRestore'],
-							fade: true
-						},
-						{
-							extend: 'print',
-							text: '<i class="fas fa-print"></i>',
-							title: 'Data Stock :' + datenow,
-							titleAttr: 'print',
-							customize: function(win) {
-								$(win.document.body)
-									.css('font-size', '10pt')
-									.prepend(
-										'<img src="<?php echo base_url('asset/images/front/logo/logo_ver_2.png'); ?>" style="position:absolute; top:0; right:20px;opacity:0.5;height:80px" />'
-									);
-
-								$(win.document.body).find('table')
-									.addClass('compact')
-									.css('font-size', 'inherit');
-							}
-						},
-						{
-							text: '<i class="fas fa-redo-alt"></i>',
-							className: '',
-							titleAttr: 'reload',
-							action: function(e, dt, node, config) {
-								//
-								//	API reload(callback,resetPaging [default true,false])
-								//
-								dt.ajax.reload();
-								// dt.ajax.reload(null, false);
-							}
-						}
-
-					],
 					/* "orderFixed": {
 					    "pre": [ 6, 'asc' ],
 					    "post": [ 4, 'desc' ]
@@ -384,7 +345,107 @@
 			//	create block html date
 			creatDate();
 
-			$.fn.dataTable.ext.order['dom-text-numeric'] = function(settings, col) {
+			
+			
+			
+			
+			new $.fn.dataTable.Buttons( $('.ex1').DataTable(), {
+				buttons: [
+					{
+						extend: 'collection',
+						text: '<i class="far fa-eye"></i>',
+						titleAttr: 'view',
+						tag: 'span',
+						buttons: ['columnsToggle', 'colvisRestore'],
+						fade: true
+					},
+					{
+						extend: 'print',
+						text: '<i class="fas fa-print"></i>',
+						title: 'Data Stock :',
+						titleAttr: 'print',
+						customize: function(win) {
+							$(win.document.body)
+								.css('font-size', '10pt')
+								.prepend(
+									'<img src="<?php echo base_url('asset/images/front/logo/logo_ver_2.png'); ?>" style="position:absolute; top:0; right:20px;opacity:0.5;height:80px" />'
+								);
+
+							$(win.document.body).find('table')
+								.addClass('compact')
+								.css('font-size', 'inherit');
+						}
+					},
+					{
+						text: '<i class="fas fa-redo-alt"></i>',
+						className: '',
+						titleAttr: 'reload',
+						action: function(e, dt, node, config) {
+							//
+							//	API reload(callback,resetPaging [default true,false])
+							//
+							dt.ajax.reload();
+							// dt.ajax.reload(null, false);
+						}
+					}
+				]
+			} );
+			
+			/* $.fn.dataTable
+				.tables({
+				
+				
+				buttons: [{
+							extend: 'collection',
+							text: '<i class="far fa-eye"></i>',
+							titleAttr: 'view',
+							tag: 'span',
+							buttons: ['columnsToggle', 'colvisRestore'],
+							fade: true
+						},
+						{
+							extend: 'print',
+							text: '<i class="fas fa-print"></i>',
+							title: 'Data Stock :',
+							titleAttr: 'print',
+							customize: function(win) {
+								$(win.document.body)
+									.css('font-size', '10pt')
+									.prepend(
+										'<img src="<?php echo base_url('asset/images/front/logo/logo_ver_2.png'); ?>" style="position:absolute; top:0; right:20px;opacity:0.5;height:80px" />'
+									);
+
+								$(win.document.body).find('table')
+									.addClass('compact')
+									.css('font-size', 'inherit');
+							}
+						},
+						{
+							text: '<i class="fas fa-redo-alt"></i>',
+							className: '',
+							titleAttr: 'reload',
+							action: function(e, dt, node, config) {
+								//
+								//	API reload(callback,resetPaging [default true,false])
+								//
+								dt.ajax.reload();
+								// dt.ajax.reload(null, false);
+							}
+						}
+
+					]
+				
+				
+				})
+				.adjust() */
+			
+			
+			
+			
+			
+
+		})
+		$.fn.dataTable.ext.order['dom-text-numeric'] = function(settings, col) {
 				// console.log(settings);
 				return this.api().column(col, {
 					order: 'index'
@@ -396,8 +457,24 @@
 					return $(td).text() * 1;
 				});
 			}
+			// console.log($.fn.dataTable.ext);
+			$.fn.dataTable.ext.buttons.print = {
+				// extend: 'print',
+				text: '<i class="fas fa-print"></i>',
+				title: 'Data Stock :',
+				titleAttr: 'print',
+				customize: function(win) {
+					$(win.document.body)
+						.css('font-size', '10pt')
+						.prepend(
+							'<img src="<?php echo base_url('asset/images/front/logo/logo_ver_2.png'); ?>" style="position:absolute; top:0; right:20px;opacity:0.5;height:80px" />'
+						);
 
-		})
+					$(win.document.body).find('table')
+						.addClass('compact')
+						.css('font-size', 'inherit');
+				}
+			};
 
 		$(document).on('change', 'input#table-datestart', function(event) {
 			event.stopPropagation();

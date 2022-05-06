@@ -189,83 +189,58 @@ class Ctl_retailstock extends CI_Controller
 			exit; */
 
 			/**
-			 * * ค้นหาจำนวนสินค้าที่ไม่มีบน stock ในรอบตัดปัจจุบัน
+			 * * ค้นหาจำนวนเหลือบน stock
 			 */
 			if ($datestart) {
-				$countitem = ($item ? count($item) : 0);
 				$setitem_on = implode(',', $item);
-
 				$sqlst = $this->db->select('retail_stock.RETAIL_PRODUCTLIST_ID as productid')
 					->from('retail_stock')
 					->where('retail_stock.status', 1)
-					// ->where('retail_stock.date_cut >=', $datestart)	//code old
-					->where('retail_stock.date_cut >=', $datecut)
-					->where('retail_stock.retail_productlist_id in(' . $setitem_on . ')', null, false)
+					->where('retail_stock.date_cut >=', $datestart)
+					->where('retail_stock.retail_productlist_id not in(' . $setitem_on . ')', null, false)
 					->group_by('retail_stock.retail_productlist_id');
 				$qst = $sqlst->get();
 				$numst = $qst->num_rows();
+				if ($numst) {
 
-				if ($numst < $countitem) {
-					//
-					//	กรณีพบว่าสินค้าที่ค้นหามีบางตัวไม่มีบน stock foreach เพื่อเพิ่มสินค้า
-					foreach($item as $keyitem => $valitem){
-						$sql_find_stocknewitem = $this->mdl_retailstock->sqlStock()
-						->where('retail_stock.date_cut >=', $datecut)
-						->where('retail_stock.retail_productlist_id',$valitem);
-						$q_f_stocknewitem = $sql_find_stocknewitem->get();
-						$num_f_stocknewitem = $q_f_stocknewitem->num_rows();
-						//
-						//	ถ้าไม่พบสินค้านี้ในระบบ stock ให้เพิ่มลงไป
-						if(!$num_f_stocknewitem){
+					foreach ($qst->result() as $rst) {
+						$arrayst = array(
+							'item'			=> $rst->productid,
+							'datestart'		=> $datestart,
+							'datecut'		=> $datecut
+						);
 
-							$arrayst = array(
-								'item'			=> $valitem,
-								'datestart'		=> $datestart,
-								'datecut'		=> $datecut
-							);
-	
-							$total_bill_order = $this->mdl_retailstock->total_start_billOrder($arrayst);
-							$total_bill_issue = $this->mdl_retailstock->total_start_billIssue($arrayst);
-							$total_bill_receive = $this->mdl_retailstock->total_start_billReceive($arrayst);
-	
-							$arraycal = array(
-								'total_bill'	=> $total_bill_order['row'],
-								'total_issue'	=> $total_bill_issue['row'],
-								'total_receive'	=> $total_bill_receive['row']
-							);
-							$total = $this->mdl_retailstock->cal_stock($arraycal);
-	
-							$insert = array(
-								'retail_productlist_id' => $valitem,
-								'total' 					=> get_valueNullToNull($total),
-								'date_cut' 					=> $datecut,
-								'date_starts' 				=> $this->set['datenow'],
-								'user_starts' 				=> $this->session->userdata('useradminid')
-							);
-							/* echo "stockมี insert :".$valitem." = ".$total."<br>";
-							echo "(b=".$arraycal['total_bill'].")";
-							echo "(i=".$arraycal['total_issue'].")";
-							echo "(r=".$arraycal['total_receive'].")";
-							echo "<br>"; */
-							$this->db->insert('retail_stock', $insert);
-							
-						}
-					}	//	End foreach กรณีพบว่าสินค้าที่ค้นหามีบางตัวไม่มีบน stock 
-					
+						$total_bill_order = $this->mdl_retailstock->total_start_billOrder($arrayst);
+						$total_bill_issue = $this->mdl_retailstock->total_start_billIssue($arrayst);
+						$total_bill_receive = $this->mdl_retailstock->total_start_billReceive($arrayst);
+
+						$arraycal = array(
+							'total_bill'	=> $total_bill_order['row'],
+							'total_issue'	=> $total_bill_issue['row'],
+							'total_receive'	=> $total_bill_receive['row']
+						);
+						$total = $this->mdl_retailstock->cal_stock($arraycal);
+
+						$insert = array(
+							'retail_productlist_id' => $rst->productid,
+							'total' 					=> get_valueNullToNull($total),
+							'date_cut' 					=> $datecut,
+							'date_starts' 				=> $this->set['datenow'],
+							'user_starts' 				=> $this->session->userdata('useradminid')
+						);
+						// echo "stockมี insert :".$val." = ".$total;
+						$this->db->insert('retail_stock', $insert);
+					}
 				}
 			}
-			// exit;
 			//	create value unique
 
 			/* echo "<pre>item";
-			print_r($numst);
-			echo "==== data";
-			echo "datestart=".$datestart;
-			echo "<br>datecut=".$datecut;
-			echo "<br>date=".$datecut;
-			echo "<br>datenow=".$this->set['datenow'];
-			echo "</pre>"; */
-			// exit;
+			print_r($item);
+			echo "==== insert";
+			print_r($item_on);
+			echo "</pre>";
+			exit; */
 
 			/**
 			 * * ถ้ามีสินค้าที่ต้องนำเข้า stock
@@ -564,7 +539,8 @@ class Ctl_retailstock extends CI_Controller
 				$key_lid = array_keys(array_column($result_cut['result'], 'pid'), $productid);
 				if (count($key_lid)) {
 					foreach ($key_lid as $key => $value) {
-
+						//	โชคชัยเจอกี้หมู 60 กรัม
+						//	test
 						$arraytest = array(
 							'item'	=> $productid,
 							'date'	=> $date_full_begin,
@@ -572,11 +548,11 @@ class Ctl_retailstock extends CI_Controller
 						);
 						$starts = $this->mdl_retailstock->find_total_stockproductstarts($arraytest);
 						/* echo "<pre>";
-						echo "id = ".$productid."<br>";
-						echo "cut = ".$arraytest['datecut']."--------".$arraytest['date']."<br>";
-						echo "cut total = ".$result_cut['result'][$value]['qty']."<br>";
-						print_r($starts);
-						echo "</pre>"; */
+echo "id = ".$productid."<br>";
+echo "cut = ".$arraytest['datecut']."--------".$arraytest['date']."<br>";
+echo "cut total = ".$result_cut['result'][$value]['qty']."<br>";
+print_r($starts);
+echo "</pre>"; */
 
 						// $totalcut = $result_cut['result'][$value]['qty'];
 
@@ -588,6 +564,142 @@ class Ctl_retailstock extends CI_Controller
 				}
 			}
 
+			$total_for_length = 0;
+
+			//	ปิดไปก่อน เพราะทำให้จำนวนบน stock ไม่ตรง
+			if ($date_begin > 1000 && $date_length) {
+
+				for ($datei = 1; $datei < $date_begin; $datei++) {
+					$total_start_bill_net = 0;
+					$total_start_receive_net = 0;
+					$total_start_issue_net = 0;
+					$array_start_bill_result = array();
+					$array_start_receive_result = array();
+					$array_start_issue_result = array();
+
+					$dateizero = str_pad($datei, 2, '0', STR_PAD_LEFT);
+					$date_for = $date . "-" . $dateizero;
+
+					//
+					//	รวมยอดบิลก่อนถึงวันปัจจุบัน
+					$total_start_bill_start = 0;
+					if ($result_bill_start) {
+						$array_start_bill_date_today = array_keys(array_column($result_bill_start['result'], 'date_starts'), $date_for);
+						if ($array_start_bill_date_today) {
+							$arraysub_start_bill_result = array();
+
+							foreach ($array_start_bill_date_today as $key => $value) {
+								$arraysub_start_bill_result[] = array(
+									'date_starts'	=> $result_bill_start['result'][$value]['date_starts'],
+									'pid'			=> $result_bill_start['result'][$value]['pid'],
+									'lid'			=> $result_bill_start['result'][$value]['lid'],
+									'qty'			=> $result_bill_start['result'][$value]['qty']
+								);
+							}
+							$array_start_bill_result['result'] = $arraysub_start_bill_result;
+						}
+					}
+
+					//
+					//	รวมยอดบิลรับเข้าก่อนถึงวันปัจจุบัน
+					$total_start_receive_start = 0;
+					if ($result_receive_start) {
+						$array_start_receive_date_today = array_keys(array_column($result_receive_start['result'], 'date_starts'), $date_for);
+						if ($array_start_receive_date_today) {
+
+							$arraysub_start_receive_result = array();
+
+							foreach ($array_start_receive_date_today as $key => $value) {
+								$arraysub_start_receive_result[] = array(
+									'date_starts'	=> $result_receive_start['result'][$value]['date_starts'],
+									'pid'			=> $result_receive_start['result'][$value]['pid'],
+									'lid'			=> $result_receive_start['result'][$value]['lid'],
+									'qty'			=> $result_receive_start['result'][$value]['qty']
+								);
+							}
+							$array_start_receive_result['result'] = $arraysub_start_receive_result;
+						}
+					}
+
+					//
+					//	รวมยอดเบิกออกก่อนถึงวันปัจจุบัน
+					$total_start_issue_start = 0;
+					if ($result_issue_start) {
+						$array_start_issue_date_today = array_keys(array_column($result_issue_start['result'], 'date_starts'), $date_for);
+						if ($array_start_issue_date_today) {
+
+							$arraysub_start_issue_result = array();
+
+							foreach ($array_start_issue_date_today as $key => $value) {
+								$arraysub_start_issue_result[] = array(
+									'date_starts'	=> $result_issue_start['result'][$value]['date_starts'],
+									'pid'			=> $result_issue_start['result'][$value]['pid'],
+									'lid'			=> $result_issue_start['result'][$value]['lid'],
+									'qty'			=> $result_issue_start['result'][$value]['qty']
+								);
+							}
+							$array_start_issue_result['result'] = $arraysub_start_issue_result;
+						}
+					}
+
+					//	หาจำนวนรายการบิลของสินค้าในวันนี้
+					if ($array_start_bill_result['result']) {
+						$total_start_bill_start = $this->findscore($array_start_bill_result, $productid);
+						$total_start_bill_net += $total_start_bill_start;
+					}
+
+					//	หาจำนวนรับเข้าของสินค้าในวันนี้
+					if ($array_start_receive_result['result']) {
+						$total_start_receive_start = $this->findscore($array_start_receive_result, $productid);
+						$total_start_receive_net += $total_start_receive_start;
+					}
+
+					//	หาจำนวนเบิกออกของสินค้าในวันนี้
+					if ($array_start_issue_result['result']) {
+						$total_start_issue_start = $this->findscore($array_start_issue_result, $productid);
+						$total_start_issue_net += $total_start_issue_start;
+					}
+
+
+					//	find data cut value from data stock
+					$arraytotal_start = array(
+						'total_bill'	=> $total_start_bill_net,
+						'total_issue'	=> $total_start_issue_net,
+						'total_receive'	=> $total_start_receive_net
+					);
+					$net = $this->mdl_retailstock->cal_stock($arraytotal_start);
+					/* echo "<pre> date_for = ".$date_for;
+					print_r($arraytotal_start);
+					echo "</pre>";
+					echo "product id : ".$productid." net : ".$net."<br>"; */
+					$total_for_length = get_valueNullTozero($total_for_length) + $net;
+
+
+
+					/* echo "test".$productid." -- ".$date_for." = ".$totalcut."<br>";
+					echo "bill ::".$total_start_bill_net."<br>";
+					echo "issue ::".$total_start_issue_net."<br>";
+					echo "rece ::".$total_start_receive_net."<br>";
+					echo "<pre>";
+					// print_r($array_start_bill_result);
+					// echo "==================<br>";
+					// print_r($array_start_receive_result);
+					// echo "==================<br>";
+					// print_r($array_start_issue_result);
+					// echo "==================<br>";
+					echo " total_for_length = ".$total_for_length."<br>";
+					echo "</pre>"; */
+				}
+			}
+
+			//	สำหรับคำนวณกับยอดอื่นๆ
+			if ($total_for_length) {
+				$totalcut = $totalcut + $total_for_length;
+				$total_cut = $totalcut;
+				// $totalcut = get_valueNullTozero($totalcut) + $net;
+			}
+/* echo "total = ".$totalcut."<br>";
+echo "==========================================<br>"; */
 			for ($d = $date_begin; $d <= $date_length; $d++) {
 				$total_bill_start = "";
 				$total_receive_start = "";
