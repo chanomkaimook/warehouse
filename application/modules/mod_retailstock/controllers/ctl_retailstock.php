@@ -239,7 +239,8 @@ class Ctl_retailstock extends CI_Controller
 								'retail_productlist_id' => $valitem,
 								'total' 					=> get_valueNullToNull($total),
 								'date_cut' 					=> $datecut,
-								'date_starts' 				=> $this->set['datenow'],
+								// 'date_starts' 				=> $this->set['datenow'],
+								'date_starts' 				=> $datecut,
 								'user_starts' 				=> $this->session->userdata('useradminid')
 							);
 							/* echo "stockมี insert :".$valitem." = ".$total."<br>";
